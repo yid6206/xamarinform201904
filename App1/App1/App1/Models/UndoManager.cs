@@ -11,7 +11,8 @@ namespace App1.Models
         public static void Push(Action action) => _undoList.Push(action);
         public static void Undo()
         {
-            _undoList.Pop()?.Invoke();
+            if (_undoList.Count > 0)
+                _undoList.Pop().Invoke();
         }
     }
 }

@@ -11,8 +11,8 @@ namespace App1.ViewModels
         {
             X = 150;
             Y = 150;
-            Width = 50;
-            Height = 50;
+            Width = 100;
+            Height = 100;
         }
 
         public double X { get => Get(nameof(X)); set => Set(nameof(X), value); }

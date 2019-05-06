@@ -22,6 +22,7 @@ namespace App1.Droid.Renderers
         private const double ScaleChangeWidth = 5;
         private float _prevX;
         private float _prevY;
+        private Xamarin.Forms.Point[] _prevOnBoxPoints = new Xamarin.Forms.Point[0];
         private Directions _scaleChangeDirections = Directions.None;
         private Rectangle _downRect;
 
@@ -39,6 +40,27 @@ namespace App1.Droid.Renderers
         public override void Draw(Canvas canvas)
         {
             base.Draw(canvas);
+            //var box = (BoxViewEx)Element;
+            //using (var paint = new Paint())
+            //{
+            //    var shadowSize = box.ShadowSize;
+            //    var blur = shadowSize;
+            //    var radius = box.Radius;
+
+            //    paint.AntiAlias = true;
+
+            //    // 影の描画（1）
+            //    paint.Color = (Xamarin.Forms.Color.FromRgba(0, 0, 0, 112)).ToAndroid();
+            //    paint.SetMaskFilter(new BlurMaskFilter(blur, BlurMaskFilter.Blur.Normal));
+            //    var rectangle = new RectF(shadowSize, shadowSize, Width - shadowSize, Height - shadowSize);
+            //    canvas.DrawRoundRect(rectangle, radius, radius, paint);
+
+            //    // 本体の描画（2）
+            //    paint.Color = box.Color.ToAndroid();
+            //    paint.SetMaskFilter(null);
+            //    rectangle = new RectF(0, 0, Width - shadowSize * 2, Height - shadowSize * 2);
+            //    canvas.DrawRoundRect(rectangle, radius, radius, paint);
+            //}
         }
 
         private void BoxExRenderer_Touch(object sender, TouchEventArgs e)
@@ -51,40 +73,25 @@ namespace App1.Droid.Renderers
                 case MotionEventActions.Down:
                     box.GetParent<BoxAreaLayout>().ResetAllSelect();
                     box.Selected = true;
-
-                    var xOnBox = e.Event.GetX();
-                    var yOnBox = e.Event.GetY();
-                    if (xOnBox < ScaleChangeWidth)
-                        _scaleChangeDirections |= Directions.Left;
-                    else if (xOnBox - ScaleChangeWidth > box.Width * 2)
-                        _scaleChangeDirections |= Directions.Right;
-                    if (yOnBox < ScaleChangeWidth)
-                        _scaleChangeDirections |= Directions.Top;
-                    else if (yOnBox - ScaleChangeWidth > box.Width * 2)
-                        _scaleChangeDirections |= Directions.Bottom;
-
-                    _downRect = box.ViewModel.GetRect();
-                    var s1 = ScaleX;
-                    var s2 = ScaleXs;
-                    var s3 = ScaleY;
-                    var s4 = ScaleYs;
-                    System.Diagnostics.Debug.WriteLine("   xxx");
-                    System.Diagnostics.Debug.WriteLine($"box x:{box.ViewModel.X}, y:{box.ViewModel.Y}, width:{box.ViewModel.Width}, height:{box.ViewModel.Height}");
-                    System.Diagnostics.Debug.WriteLine($"frame x:{((Frame)box.Parent).X}, y:{((Frame)box.Parent).Y}, width:{((Frame)box.Parent).Width}, height:{((Frame)box.Parent).Height}");
-                    System.Diagnostics.Debug.WriteLine($"touch x:{e.Event.RawX}, y:{e.Event.RawY}");
-                    System.Diagnostics.Debug.WriteLine($"touch x:{e.Event.GetX()}, y:{e.Event.GetY()}");
                     break;
                 case MotionEventActions.Move:
-                    var x = (e.Event.RawX - _prevX) / 3;
-                    var y = (e.Event.RawY - _prevY) / 3;
-                    if(!_scaleChangeDirections.HasFlag(Directions.Right))
-                    box.ViewModel.X += x;
-                    if (!_scaleChangeDirections.HasFlag(Directions.Bottom))
+                    var isScaleMode = e.Event.PointerCount == 2 && _prevOnBoxPoints.Length == 2;
+                    if (isScaleMode)
+                    {
+                        var prevRect = CreateRectangle(_prevOnBoxPoints[0].X, _prevOnBoxPoints[0].Y, _prevOnBoxPoints[1].X, _prevOnBoxPoints[1].Y);
+                        var newRect = CreateRectangle(e.Event.GetX(0), e.Event.GetY(0), e.Event.GetX(1), e.Event.GetY(1));
+                        box.ViewModel.X += newRect.X - prevRect.X;
+                        box.ViewModel.Y += newRect.Y - prevRect.Y;
+                        box.ViewModel.Width += newRect.Width - prevRect.Width;
+                        box.ViewModel.Height += newRect.Height - prevRect.Height;
+                    }
+                    else
+                    {
+                        var x = (e.Event.RawX - _prevX) / 3;
+                        var y = (e.Event.RawY - _prevY) / 3;
+                        box.ViewModel.X += x;
                         box.ViewModel.Y += y;
-                    if (_scaleChangeDirections.HasFlag(Directions.Left) || _scaleChangeDirections.HasFlag(Directions.Right))
-                        box.ViewModel.Width += x;
-                    if (_scaleChangeDirections.HasFlag(Directions.Top) || _scaleChangeDirections.HasFlag(Directions.Bottom))
-                        box.ViewModel.Height += y;
+                    }
                     box.UpdateLocationAndSize();
                     break;
                 case MotionEventActions.Up:
@@ -105,6 +112,16 @@ namespace App1.Droid.Renderers
             }
             _prevX = e.Event.RawX;
             _prevY = e.Event.RawY;
+            _prevOnBoxPoints = Enumerable.Range(0, e.Event.PointerCount).Select(q => new Xamarin.Forms.Point(e.Event.GetX(q), e.Event.GetY(q))).ToArray();
+        }
+
+        private Rectangle CreateRectangle(double x1, double y1, double x2, double y2)
+        {
+            return new Rectangle(
+                Math.Min(x1, x2),
+                Math.Min(y1, y2),
+                Math.Abs(x1 - x2),
+                Math.Abs(y1 - y2));
         }
     }
 }

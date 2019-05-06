@@ -24,15 +24,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <v:BoxAreaLayout BindingContext="{Binding BoxAreaVM}" x:Name="DrawArea" WidthRequest="600" HeightRequest="600" BackgroundColor="WhiteSmoke">
-            <!--<Frame WidthRequest="50" HeightRequest="50" BackgroundColor="Orange" Padding="0" VerticalOptions="Center" HorizontalOptions="Center">
-                <v:BoxViewEx WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" Color="Red"></v:BoxViewEx>
-            </Frame>
-            <Frame WidthRequest="50" HeightRequest="50" BackgroundColor="Orange" Padding="0" VerticalOptions="Center" HorizontalOptions="Center">
-                <v:BoxViewEx WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" Color="Red"></v:BoxViewEx>
-            </Frame>
-            <Frame WidthRequest="50" HeightRequest="50" BackgroundColor="Orange" Padding="0" VerticalOptions="Center" HorizontalOptions="Center">
-                <v:BoxViewEx WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" Color="Red"></v:BoxViewEx>
-            </Frame>-->
         </v:BoxAreaLayout>
         <StackLayout Grid.Row="1" BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Margin="5">
