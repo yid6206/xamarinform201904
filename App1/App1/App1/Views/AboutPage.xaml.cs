@@ -15,5 +15,10 @@ namespace App1.Views
         private void DrawArea_Tappded(object sender, EventArgs e)
         {
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }

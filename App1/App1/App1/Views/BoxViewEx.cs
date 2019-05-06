@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App1.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
@@ -8,6 +9,13 @@ namespace App1.Views
     public class BoxViewEx : BoxView
     {
         private bool _selected;
+
+        public BoxViewEx()
+        {
+            BackgroundColor = Color.Red;
+        }
+
+        public BoxViewModel ViewModel => (BoxViewModel)BindingContext;
 
         public bool Selected
         {
@@ -22,13 +30,9 @@ namespace App1.Views
             }
         }
 
-        public void MoveToOffset(double x, double y)
+        public void UpdateLocationAndSize()
         {
-            var frame = this.GetParent<Frame>();
-            var bounds = frame.Bounds;
-            bounds.X += x;
-            bounds.Y += y;
-            frame.Layout(bounds);
+            ((BoxFrame)Parent).UpdateLocationAndSize();
         }
 
         private void VisibleSelectionFrame(bool vibible)
