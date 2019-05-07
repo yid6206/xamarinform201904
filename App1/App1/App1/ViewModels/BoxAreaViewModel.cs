@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -28,7 +29,11 @@ namespace App1.ViewModels
 
         private void AddBox()
         {
-            var box = new BoxViewModel();
+            var box = _boxs.LastOrDefault()?.Clone();
+            if (box == null)
+                box = new BoxViewModel();
+            else
+                box.X += 50;
             _boxs.Add(box);
             RaisePropertyChanged(nameof(Boxs));
             UndoManager.Push(() =>

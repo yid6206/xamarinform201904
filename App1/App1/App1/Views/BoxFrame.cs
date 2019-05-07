@@ -14,7 +14,7 @@ namespace App1.Views
         {
             Padding = new Thickness();
             BorderColor = Color.Black;
-            BackgroundColor = Color.Orange;
+            BackgroundColor = Color.Transparent;
             VerticalOptions = LayoutOptions.Center;
             HorizontalOptions = LayoutOptions.Center;
             Box = new BoxViewEx();

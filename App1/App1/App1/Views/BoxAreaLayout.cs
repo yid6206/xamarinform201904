@@ -12,10 +12,6 @@ namespace App1.Views
     {
         public static BindableProperty BoxsProperty = BindableProperty.Create(nameof(Boxs), typeof(BoxViewModel[]), typeof(BoxAreaLayout), null, BindingMode.OneWay);
 
-        public void ResetAllSelect()
-        {
-        }
-
         public BoxViewModel[] Boxs
         {
             get => (BoxViewModel[])GetValue(BoxsProperty);
