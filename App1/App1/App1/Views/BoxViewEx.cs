@@ -14,8 +14,6 @@ namespace App1.Views
         }
 
         public BoxViewModel ViewModel => (BoxViewModel)BindingContext;
-        public int Radius { get; set; } = 10;     // 角丸のサイズ
-        public int ShadowSize { get; set; } = 5; // 影の幅
 
         public void UpdateLocationAndSize()
         {

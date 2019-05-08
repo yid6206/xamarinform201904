@@ -13,6 +13,7 @@ namespace App1.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         private Dictionary<string, double> _doubleValues = new Dictionary<string, double>();
+        private Dictionary<string, string> _stringValues = new Dictionary<string, string>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,6 +30,15 @@ namespace App1.ViewModels
             if (_doubleValues.TryGetValue(name, out double old) && value == old)
                 return;
             _doubleValues[name] = value;
+            RaisePropertyChanged(name);
+        }
+
+        protected string GetString(string name) => _stringValues.TryGetValue(name, out string value) ? value : "";
+        protected void SetString(string name, string value)
+        {
+            if (_stringValues.TryGetValue(name, out string old) && value == old)
+                return;
+            _stringValues[name] = value;
             RaisePropertyChanged(name);
         }
 

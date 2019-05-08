@@ -69,6 +69,7 @@
     <Compile Include="Gestures\TouchGestureListener.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\BoxExRenderer.cs" />
+    <Compile Include="Renderers\LabelExRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

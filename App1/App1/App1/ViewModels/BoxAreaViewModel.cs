@@ -10,17 +10,19 @@ namespace App1.ViewModels
 {
     public class BoxAreaViewModel : BaseViewModel
     {
-        private List<BoxViewModel> _boxs = new List<BoxViewModel>();
+        private List<BaseViewModel> _items = new List<BaseViewModel>();
 
         public BoxAreaViewModel()
         {
             UndoCommand = new Command(Undo);
             AddBoxCommand = new Command(AddBox);
+            AddLabelCommand = new Command(AddLabel);
         }
 
-        public BoxViewModel[] Boxs => _boxs.ToArray();
+        public BaseViewModel[] Items => _items.ToArray();
         public ICommand UndoCommand { get; }
         public ICommand AddBoxCommand { get; }
+        public ICommand AddLabelCommand { get; }
 
         private void Undo()
         {
@@ -29,17 +31,34 @@ namespace App1.ViewModels
 
         private void AddBox()
         {
-            var box = _boxs.LastOrDefault()?.Clone();
+            var box = _items.OfType<BoxViewModel>().LastOrDefault()?.Clone();
             if (box == null)
                 box = new BoxViewModel();
             else
                 box.X += 50;
-            _boxs.Add(box);
-            RaisePropertyChanged(nameof(Boxs));
+            _items.Add(box);
+            RaisePropertyChanged(nameof(Items));
             UndoManager.Push(() =>
             {
-                _boxs.Remove(box);
-                RaisePropertyChanged(nameof(Boxs));
+                _items.Remove(box);
+                RaisePropertyChanged(nameof(Items));
+            });
+        }
+
+        private void AddLabel()
+        {
+            var label = _items.OfType<LabelViewModel>().LastOrDefault()?.Clone();
+            if (label == null)
+                label = new LabelViewModel();
+            else
+                label.X += 50;
+            label.Text = (_items.OfType<LabelViewModel>().Count() + 1).ToString();
+            _items.Add(label);
+            RaisePropertyChanged(nameof(Items));
+            UndoManager.Push(() =>
+            {
+                _items.Remove(label);
+                RaisePropertyChanged(nameof(Items));
             });
         }
     }

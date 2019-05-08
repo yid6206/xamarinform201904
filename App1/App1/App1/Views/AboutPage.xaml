@@ -29,7 +29,7 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Margin="5">
                 <Button Text="←" BackgroundColor="White" Command="{Binding BoxAreaVM.UndoCommand}" HorizontalOptions="Start"></Button>
                 <Button Text="□" BackgroundColor="White" Command="{Binding BoxAreaVM.AddBoxCommand}"></Button>
-                <Button Text="○" BackgroundColor="White"></Button>
+                <Button Text="○" BackgroundColor="White" Command="{Binding BoxAreaVM.AddLabelCommand}"></Button>
             </StackLayout>
         </StackLayout>
     </Grid>

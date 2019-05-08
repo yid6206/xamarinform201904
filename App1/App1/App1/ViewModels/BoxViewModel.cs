@@ -15,10 +15,6 @@ namespace App1.ViewModels
             Height = 100;
         }
 
-        //public double X { get => Get(nameof(X)); set => Set(nameof(X), (int)(value / 10 + 0.5) * 10); }
-        //public double Y { get => Get(nameof(Y)); set => Set(nameof(Y), (int)(value / 10 + 0.5) * 10); }
-        //public double X { get => ((int)(Get(nameof(X)) / 10 + 0.5) * 10); set => Set(nameof(X), value); }
-        //public double Y { get => ((int)(Get(nameof(Y)) / 10 + 0.5) * 10); set => Set(nameof(Y), value); }
         public double X { get => Get(nameof(X)); set => Set(nameof(X), value); }
         public double Y { get => Get(nameof(Y)); set => Set(nameof(Y), value); }
         public double Width { get => Get(nameof(Width)); set => Set(nameof(Width), value); }

@@ -14,10 +14,10 @@ using App1.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(BoxViewEx), typeof(BoxExRenderer))]
+[assembly: ExportRenderer(typeof(LabelEx), typeof(LabelExRenderer))]
 namespace App1.Droid.Renderers
 {
-    public class BoxExRenderer : BoxRenderer
+    public class LabelExRenderer : LabelRenderer
     {
         private const double ScaleChangeWidth = 5;
         private float _prevX;
@@ -25,21 +25,21 @@ namespace App1.Droid.Renderers
         private Xamarin.Forms.Point[] _prevOnBoxPoints = new Xamarin.Forms.Point[0];
         private Rectangle _downRect;
 
-        public BoxExRenderer(Context context)
+        public LabelExRenderer(Context context)
             : base(context)
         {
-            
+
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<BoxView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);
-            this.Touch += BoxExRenderer_Touch;
+            this.Touch += LabelExRenderer_Touch; ;
         }
 
-        private void BoxExRenderer_Touch(object sender, TouchEventArgs e)
+        private void LabelExRenderer_Touch(object sender, TouchEventArgs e)
         {
-            var box = (BoxViewEx)Element;
+            var box = (LabelEx)Element;
             var area = (BoxAreaLayout)box.Parent.Parent;
             var scale = area.Scale;
             switch (e.Event.Action)
@@ -55,10 +55,9 @@ namespace App1.Droid.Renderers
                         var newRect = CreateRectangle(e.Event.GetX(0), e.Event.GetY(0), e.Event.GetX(1), e.Event.GetY(1));
                         box.ViewModel.X += (newRect.X - prevRect.X) / 3;
                         box.ViewModel.Y += (newRect.Y - prevRect.Y) / 3;
-                        box.ViewModel.Width += (newRect.Width - prevRect.Width) / 3;
-                        box.ViewModel.Height += (newRect.Height - prevRect.Height ) / 3;
+                        box.ViewModel.Size += (newRect.Width - prevRect.Width) / 3;
                     }
-                    else if(_prevOnBoxPoints.Length == 1)
+                    else if (_prevOnBoxPoints.Length == 1)
                     {
                         var x = (e.Event.RawX - _prevX) / 3;
                         var y = (e.Event.RawY - _prevY) / 3;
@@ -72,8 +71,7 @@ namespace App1.Droid.Renderers
                     var upper = 20;
                     box.ViewModel.X = ((int)(box.ViewModel.X / upper + 0.5)) * upper;
                     box.ViewModel.Y = ((int)(box.ViewModel.Y / upper + 0.5)) * upper;
-                    box.ViewModel.Width = ((int)(box.ViewModel.Width / upper + 0.5)) * upper;
-                    box.ViewModel.Height = ((int)(box.ViewModel.Height / upper + 0.5)) * upper;
+                    box.ViewModel.Size = ((int)(box.ViewModel.Size / upper + 0.5)) * upper;
                     box.UpdateLocationAndSize();
                     var rect = box.ViewModel.GetRect();
                     if (!rect.Equals(_downRect))
@@ -82,8 +80,7 @@ namespace App1.Droid.Renderers
                         {
                             box.ViewModel.X = _downRect.X;
                             box.ViewModel.Y = _downRect.Y;
-                            box.ViewModel.Width = _downRect.Width;
-                            box.ViewModel.Height = _downRect.Height;
+                            box.ViewModel.Size = _downRect.Width;
                             box.UpdateLocationAndSize();
                         });
                     }

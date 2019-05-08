@@ -10,38 +10,64 @@ namespace App1.Views
 {
     public class BoxAreaLayout : StackLayout
     {
-        public static BindableProperty BoxsProperty = BindableProperty.Create(nameof(Boxs), typeof(BoxViewModel[]), typeof(BoxAreaLayout), null, BindingMode.OneWay);
+        public static BindableProperty ItemsProperty = BindableProperty.Create(nameof(Items), typeof(BaseViewModel[]), typeof(BoxAreaLayout), null, BindingMode.OneWay);
 
-        public BoxViewModel[] Boxs
+        public BaseViewModel[] Items
         {
-            get => (BoxViewModel[])GetValue(BoxsProperty);
-            set => SetValue(BoxsProperty, value);
+            get => (BaseViewModel[])GetValue(ItemsProperty);
+            set => SetValue(ItemsProperty, value);
         }
 
         protected override void OnBindingContextChanged()
         {
             base.OnBindingContextChanged();
-            SetBinding(BoxsProperty, new Binding(nameof(BoxAreaViewModel.Boxs), BindingMode.OneWay) { Source = BindingContext });
+            SetBinding(ItemsProperty, new Binding(nameof(BoxAreaViewModel.Items), BindingMode.OneWay) { Source = BindingContext });
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-            if (propertyName == nameof(Boxs))
-                UpdateBoxs();
+            if (propertyName == nameof(Items))
+                UpdateFrames();
         }
 
-        private void UpdateBoxs()
+        private void UpdateFrames()
         {
-            var views = Children.OfType<BoxFrame>().ToArray();
-            Children.Clear();
-            foreach (var vm in Boxs)
+            var boxViews = Children.OfType<BoxFrame>().ToArray();
+            var labelViews = Children.OfType<LabelFrame>().ToArray();
+
+            var boxVMs = Items.OfType<BoxViewModel>().ToArray();
+            var labelVMs = Items.OfType<LabelViewModel>().ToArray();
+
+            var removeViews = new List<View>();
+            removeViews.AddRange(boxViews.Skip(boxVMs.Length));
+            removeViews.AddRange(labelViews.Skip(labelVMs.Length));
+            var addViews = new List<View>();
+            for (var i = 0; i < boxVMs.Length; i++)
             {
-                var view = views.FirstOrDefault(q => q.BindingContext == vm);
+                var view = boxViews.ElementAtOrDefault(i);
                 if (view == null)
-                    view = new BoxFrame { BindingContext = vm };
-                Children.Add(view);
+                {
+                    view = new BoxFrame();
+                    addViews.Add(view);
+                }
+                view.BindingContext = boxVMs[i];
             }
+            for (var i = 0; i < labelVMs.Length; i++)
+            {
+                var view = labelViews.ElementAtOrDefault(i);
+                if (view == null)
+                {
+                    view = new LabelFrame();
+                    addViews.Add(view);
+                }
+                view.BindingContext = labelVMs[i];
+            }
+
+            foreach (var view in removeViews)
+                Children.Remove(view);
+            foreach (var view in addViews)
+                Children.Add(view);
         }
 
         private BoxFrame[] GetBoxs<T>(Layout<T> layout) where T : View

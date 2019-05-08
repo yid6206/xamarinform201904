@@ -1,5 +1,4 @@
-﻿using App1.Models;
-using App1.ViewModels;
+﻿using App1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -8,21 +7,25 @@ using Xamarin.Forms;
 
 namespace App1.Views
 {
-    public class BoxFrame : Frame
+    public class LabelFrame : Frame
     {
-        public BoxFrame()
+        public LabelFrame()
         {
             Padding = new Thickness();
             BorderColor = Color.Black;
             BackgroundColor = Color.Transparent;
             VerticalOptions = LayoutOptions.Center;
             HorizontalOptions = LayoutOptions.Center;
-            Box = new BoxViewEx();
-            Content = Box;
+            CornerRadius = 50;
+            Label = new LabelEx
+            {
+                Text = "1",
+            };
+            Content = Label;
         }
 
-        public BoxViewEx Box { get; }
-        public BoxViewModel ViewModel => (BoxViewModel)BindingContext;
+        public LabelEx Label { get; }
+        public LabelViewModel ViewModel => (LabelViewModel)BindingContext;
 
         protected override void OnBindingContextChanged()
         {
@@ -35,10 +38,9 @@ namespace App1.Views
             base.OnPropertyChanged(propertyName);
             switch (propertyName)
             {
-                case nameof(BoxViewModel.X):
-                case nameof(BoxViewModel.Y):
-                case nameof(BoxViewModel.Width):
-                case nameof(BoxViewModel.Height):
+                case nameof(LabelViewModel.X):
+                case nameof(LabelViewModel.Y):
+                case nameof(LabelViewModel.Size):
                     UpdateLocationAndSize();
                     break;
             }
@@ -46,6 +48,8 @@ namespace App1.Views
 
         public void UpdateLocationAndSize()
         {
+            Label.FontSize = ViewModel.Size / 2;
+            CornerRadius = (float)ViewModel.Size / 2;
             Layout(ViewModel.GetRect());
         }
     }
