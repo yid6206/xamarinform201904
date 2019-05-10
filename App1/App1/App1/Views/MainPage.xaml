@@ -1,31 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:views="clr-namespace:App1.Views"
-            x:Class="App1.Views.MainPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.MainPage"
+             xmlns:v="clr-namespace:App1.Views"
+             xmlns:vm="clr-namespace:App1.ViewModels"
+             Title="{Binding Title}" BackgroundColor="Blue">
 
-    <TabbedPage.Children>
-        <NavigationPage Title="Browse">
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_feed.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:ItemsPage />
-            </x:Arguments>
-        </NavigationPage>
-        
-        <NavigationPage Title="About">
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_about.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:AboutPage />
-            </x:Arguments>
-        </NavigationPage>
-    </TabbedPage.Children>
-    
-</TabbedPage>
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <RelativeLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <v:BoxAreaLayout BindingContext="{Binding BoxAreaVM}" x:Name="DrawArea" BackgroundColor="white" Scale="{Binding BoxAreaVM.Scale}" Margin="0" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="1000" HeightRequest="1000">
+            </v:BoxAreaLayout>
+        </RelativeLayout>
+        <StackLayout Grid.Row="1" BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Margin="5">
+                <Button Text="←" BackgroundColor="White" Command="{Binding BoxAreaVM.UndoCommand}" HorizontalOptions="Start"></Button>
+                <Button Text="□" BackgroundColor="White" Command="{Binding BoxAreaVM.AddBoxCommand}"></Button>
+                <Button Text="○" BackgroundColor="White" Command="{Binding BoxAreaVM.AddLabelCommand}"></Button>
+                <Grid>
+                    <Button Grid.Row="0" Text="+" BackgroundColor="White" Command="{Binding BoxAreaVM.ScaleUpCommand}"></Button>
+                    <Button Grid.Row="1" Text="-" BackgroundColor="White" Command="{Binding BoxAreaVM.ScaleDownCommand}"></Button>
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

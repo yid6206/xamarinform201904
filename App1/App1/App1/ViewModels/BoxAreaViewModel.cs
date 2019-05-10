@@ -14,15 +14,25 @@ namespace App1.ViewModels
 
         public BoxAreaViewModel()
         {
+            X = 0;
+            Y = 0;
+            Scale = 1;
             UndoCommand = new Command(Undo);
             AddBoxCommand = new Command(AddBox);
             AddLabelCommand = new Command(AddLabel);
+            ScaleUpCommand = new Command(ScaleUp);
+            ScaleDownCommand = new Command(ScaleDown);
         }
 
+        public double X { get => Get(nameof(X)); set => Set(nameof(X), value); }
+        public double Y { get => Get(nameof(Y)); set => Set(nameof(Y), value); }
+        public double Scale { get => Get(nameof(Scale)); set => Set(nameof(Scale), value); }
         public BaseViewModel[] Items => _items.ToArray();
         public ICommand UndoCommand { get; }
         public ICommand AddBoxCommand { get; }
         public ICommand AddLabelCommand { get; }
+        public ICommand ScaleUpCommand { get; }
+        public ICommand ScaleDownCommand { get; }
 
         private void Undo()
         {
@@ -61,5 +71,8 @@ namespace App1.ViewModels
                 RaisePropertyChanged(nameof(Items));
             });
         }
+
+        private void ScaleUp() { Scale *= 1.5; RaisePropertyChanged("Width"); }
+        private void ScaleDown() => Scale /= 1.5;
     }
 }
