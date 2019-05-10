@@ -66,6 +66,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gestures\TouchEffect.cs" />
     <Compile Include="Gestures\TouchGestureListener.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\BoxExRenderer.cs" />

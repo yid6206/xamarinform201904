@@ -27,6 +27,8 @@ namespace App1.ViewModels
         public double X { get => Get(nameof(X)); set => Set(nameof(X), value); }
         public double Y { get => Get(nameof(Y)); set => Set(nameof(Y), value); }
         public double Scale { get => Get(nameof(Scale)); set => Set(nameof(Scale), value); }
+        public bool BoxMode { get => GetBool(nameof(BoxMode)); set => SetBool(nameof(BoxMode), value); }
+        public bool LabelMode { get => GetBool(nameof(LabelMode)); set => SetBool(nameof(LabelMode), value); }
         public BaseViewModel[] Items => _items.ToArray();
         public ICommand UndoCommand { get; }
         public ICommand AddBoxCommand { get; }
@@ -41,11 +43,11 @@ namespace App1.ViewModels
 
         private void AddBox()
         {
-            var box = _items.OfType<BoxViewModel>().LastOrDefault()?.Clone();
-            if (box == null)
-                box = new BoxViewModel();
-            else
-                box.X += 50;
+            BoxMode = !BoxMode;
+        }
+        public void AddBox(double x, double y)
+        {
+            var box = new BoxViewModel { X = x, Y = y };
             _items.Add(box);
             RaisePropertyChanged(nameof(Items));
             UndoManager.Push(() =>
@@ -57,11 +59,11 @@ namespace App1.ViewModels
 
         private void AddLabel()
         {
-            var label = _items.OfType<LabelViewModel>().LastOrDefault()?.Clone();
-            if (label == null)
-                label = new LabelViewModel();
-            else
-                label.X += 50;
+            LabelMode = !LabelMode;
+        }
+        public void AddLabel(double x, double y)
+        {
+            var label = new LabelViewModel { X = x, Y = y };
             label.Text = (_items.OfType<LabelViewModel>().Count() + 1).ToString();
             _items.Add(label);
             RaisePropertyChanged(nameof(Items));

@@ -14,6 +14,7 @@ namespace App1.ViewModels
     {
         private Dictionary<string, double> _doubleValues = new Dictionary<string, double>();
         private Dictionary<string, string> _stringValues = new Dictionary<string, string>();
+        private Dictionary<string, bool> _boolValues = new Dictionary<string, bool>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,6 +40,15 @@ namespace App1.ViewModels
             if (_stringValues.TryGetValue(name, out string old) && value == old)
                 return;
             _stringValues[name] = value;
+            RaisePropertyChanged(name);
+        }
+
+        protected bool GetBool(string name) => _boolValues.TryGetValue(name, out bool value) ? value : false;
+        protected void SetBool(string name, bool value)
+        {
+            if (_boolValues.TryGetValue(name, out bool old) && value == old)
+                return;
+            _boolValues[name] = value;
             RaisePropertyChanged(name);
         }
 

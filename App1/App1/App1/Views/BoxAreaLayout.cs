@@ -14,17 +14,69 @@ namespace App1.Views
         private double? _prevPanY;
 
         public static BindableProperty ItemsProperty = BindableProperty.Create(nameof(Items), typeof(BaseViewModel[]), typeof(BoxAreaLayout), null, BindingMode.OneWay);
+        public static BindableProperty BoxModeProperty = BindableProperty.Create(nameof(BoxMode), typeof(bool), typeof(BoxAreaLayout), null, BindingMode.OneWay);
+        public static BindableProperty LabelModeProperty = BindableProperty.Create(nameof(LabelMode), typeof(bool), typeof(BoxAreaLayout), null, BindingMode.OneWay);
 
         public BoxAreaLayout()
         {
+            var effect = new TEffect();
+            effect.OnTouch += Effect_OnTouch;
+            Effects.Add(effect);
+
             var pan = new PanGestureRecognizer();
             pan.PanUpdated += Pan_PanUpdated;
             GestureRecognizers.Add(pan);
+
+            
+        }
+
+        private void Effect_OnTouch(object obj, TouchEventArgs args)
+        {
+            if (args.Type == TouchEventArgs.TouchEventType.Pressed && ViewModel.BoxMode)
+            {
+                ViewModel.AddBox(args.X, args.Y);
+                return;
+            }
+            if (args.Type == TouchEventArgs.TouchEventType.Pressed && ViewModel.LabelMode)
+            {
+                ViewModel.AddLabel(args.X, args.Y);
+                return;
+            }
+            if (args.Type == TouchEventArgs.TouchEventType.Moved)
+            {
+                System.Diagnostics.Debug.WriteLine("");
+                System.Diagnostics.Debug.WriteLine($"◆◆◆ box area pan {args.X}, {args.Y}");
+                if (_prevPanX.HasValue && _prevPanY.HasValue)
+                {
+                    //移動距離の計算
+                    var distance = new Point(args.X - _prevPanX.Value, args.Y - _prevPanY.Value);
+                    var bounds = Bounds;
+                    //bounds.X += args.X - _prevPanX.Value;
+                    //bounds.Y += args.Y - _prevPanY.Value;
+                    bounds.X += distance.X;
+                    bounds.Y += distance.Y;
+                    System.Diagnostics.Debug.WriteLine($"◆◆◆ box area bounds {bounds.X}, {bounds.Y}");
+                    //Layout(bounds);
+                    ViewModel.X += distance.X;
+                    ViewModel.Y += distance.Y;
+                    UpdateLocation();
+                }
+                _prevPanX = args.X;
+                _prevPanY = args.Y;
+            }
+        }
+
+        private void Tap_Tapped(object sender, EventArgs e)
+        {
+            if (!BoxMode)
+                return;
+
+            var items = ViewModel.Items.ToList();
         }
 
         private void Pan_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            if (e.StatusType != GestureStatus.Running)
+            if (e.StatusType != GestureStatus.Running || ViewModel.BoxMode || ViewModel.LabelMode)
                 return;
             System.Diagnostics.Debug.WriteLine("");
             System.Diagnostics.Debug.WriteLine($"◆◆◆ box area pan {e.TotalX}, {e.TotalY}");
@@ -58,6 +110,16 @@ namespace App1.Views
             get => (BaseViewModel[])GetValue(ItemsProperty);
             set => SetValue(ItemsProperty, value);
         }
+        public bool BoxMode
+        {
+            get => (bool)GetValue(BoxModeProperty);
+            set => SetValue(BoxModeProperty, value);
+        }
+        public bool LabelMode
+        {
+            get => (bool)GetValue(LabelModeProperty);
+            set => SetValue(LabelModeProperty, value);
+        }
 
         protected override void OnBindingContextChanged()
         {
@@ -66,6 +128,8 @@ namespace App1.Views
             SetBinding(ItemsProperty, new Binding(nameof(BoxAreaViewModel.Items), BindingMode.OneWay) { Source = BindingContext });
             SetBinding(XProperty, new Binding(nameof(BoxAreaViewModel.X), BindingMode.TwoWay) { Source = BindingContext });
             SetBinding(YProperty, new Binding(nameof(BoxAreaViewModel.Y), BindingMode.TwoWay) { Source = BindingContext });
+            SetBinding(ScaleProperty, new Binding(nameof(BoxAreaViewModel.Scale), BindingMode.Default) { Source = BindingContext });
+            SetBinding(ScaleProperty, new Binding(nameof(BoxAreaViewModel.Scale), BindingMode.Default) { Source = BindingContext });
             SetBinding(ScaleProperty, new Binding(nameof(BoxAreaViewModel.Scale), BindingMode.Default) { Source = BindingContext });
         }
 
