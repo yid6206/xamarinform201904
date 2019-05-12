@@ -36,10 +36,7 @@
                 <Button x:Name="btnBack" Text="←" BackgroundColor="White" Clicked="BtnBack_Clicked"></Button>
                 <Button x:Name="btnSquare" Text="□" BackgroundColor="White" Clicked="BtnSquare_Clicked"></Button>
                 <Button x:Name="btnEllipse" Text="○" BackgroundColor="White" Clicked="BtnEllipse_Clicked"></Button>
-                <Grid>
-                    <Button x:Name="btnScaleUp" Grid.Row="0" Text="+" BackgroundColor="White" HeightRequest="0" Margin="0" Padding="0" Clicked="BtnScaleUp_Clicked"></Button>
-                    <Button x:Name="btnScaleDown" Grid.Row="1" Text="-" BackgroundColor="White" HeightRequest="0" Margin="0" Padding="0" Clicked="BtnScaleDown_Clicked"></Button>
-                </Grid>
+                <Button x:Name="btnSave" Text="保存" BackgroundColor="White" Clicked="BtnSave_Clicked"></Button>
             </StackLayout>
         </StackLayout>
 

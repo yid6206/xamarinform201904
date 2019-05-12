@@ -9,6 +9,7 @@ using SkiaSharp.Views.Forms;
 
 using TouchTracking;
 using TouchTrackingEffect;
+using System.IO;
 
 namespace TouchTrackingEffectDemos
 {
@@ -115,7 +116,11 @@ namespace TouchTrackingEffectDemos
         {
             SKCanvas canvas = args.Surface.Canvas;
             canvas.Clear();
+            Draw(canvas);
+        }
 
+        private void Draw(SKCanvas canvas)
+        {
             foreach (var figure in _completedSquares.Concat(_editingSquares))
                 DrawSquare(canvas, figure);
             foreach (var figure in _completedEllipses.Concat(_editingEllipses))
@@ -197,6 +202,21 @@ namespace TouchTrackingEffectDemos
             return new SKPoint((int)(x / GridWidth + 0.5) * GridWidth, (int)(y / GridWidth + 0.5) * GridWidth);
         }
 
+        private void SaveToPng()
+        {
+            var bitmap = new SKBitmap((int)canvasView.CanvasSize.Width, (int)canvasView.CanvasSize.Height, isOpaque: false);
+            var canvas = new SKCanvas(bitmap);
+            Draw(canvas);
+
+            var image = SKImage.FromBitmap(bitmap);
+
+            using (var stream = File.Create($"TouchTrackingEffect{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png"))
+            {
+                var data = image.Encode(SKEncodedImageFormat.Png, 100);
+                data.SaveTo(stream);
+            }
+        }
+
         private void BtnBack_Clicked(object sender, EventArgs e)
         {
             UndoManager.Undo();
@@ -216,14 +236,9 @@ namespace TouchTrackingEffectDemos
             btnEllipse.BackgroundColor = _mode == Mode.Ellipse ? Color.Orange : Color.White;
         }
 
-        private void BtnScaleUp_Clicked(object sender, EventArgs e)
+        private void BtnSave_Clicked(object sender, EventArgs e)
         {
-
-        }
-
-        private void BtnScaleDown_Clicked(object sender, EventArgs e)
-        {
-
+            SaveToPng();
         }
     }
 }
