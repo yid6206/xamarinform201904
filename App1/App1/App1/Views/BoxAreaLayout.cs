@@ -20,7 +20,7 @@ namespace App1.Views
         public BoxAreaLayout()
         {
             var effect = new TEffect();
-            effect.OnTouch += Effect_OnTouch;
+            effect.OnTouchAction += Effect_OnTouch;
             Effects.Add(effect);
 
             var pan = new PanGestureRecognizer();
@@ -30,39 +30,38 @@ namespace App1.Views
             
         }
 
-        private void Effect_OnTouch(object obj, TouchEventArgs args)
+        private void Effect_OnTouch(object obj, TouchActionEventArgs args)
         {
-            if (args.Type == TouchEventArgs.TouchEventType.Pressed && ViewModel.BoxMode)
+            var bounds = Bounds;
+            if (args.Type == TouchActionType.Pressed && ViewModel.BoxMode)
             {
-                ViewModel.AddBox(args.X, args.Y);
+                ViewModel.AddBox(args.Point.X, args.Point.Y);
                 return;
             }
-            if (args.Type == TouchEventArgs.TouchEventType.Pressed && ViewModel.LabelMode)
+            if (args.Type == TouchActionType.Pressed && ViewModel.LabelMode)
             {
-                ViewModel.AddLabel(args.X, args.Y);
+                ViewModel.AddLabel(args.Point.X, args.Point.Y);
                 return;
             }
-            if (args.Type == TouchEventArgs.TouchEventType.Moved)
+            if (args.Type == TouchActionType.Moved)
             {
                 System.Diagnostics.Debug.WriteLine("");
-                System.Diagnostics.Debug.WriteLine($"◆◆◆ box area pan {args.X}, {args.Y}");
+                System.Diagnostics.Debug.WriteLine($"◆◆◆ box area pan {args.Point.X}, {args.Point.Y}");
                 if (_prevPanX.HasValue && _prevPanY.HasValue)
                 {
                     //移動距離の計算
-                    var distance = new Point(args.X - _prevPanX.Value, args.Y - _prevPanY.Value);
-                    var bounds = Bounds;
+                    var distance = new Point(args.Point.X - _prevPanX.Value, args.Point.Y - _prevPanY.Value);
                     //bounds.X += args.X - _prevPanX.Value;
                     //bounds.Y += args.Y - _prevPanY.Value;
-                    bounds.X += distance.X;
-                    bounds.Y += distance.Y;
                     System.Diagnostics.Debug.WriteLine($"◆◆◆ box area bounds {bounds.X}, {bounds.Y}");
                     //Layout(bounds);
                     ViewModel.X += distance.X;
                     ViewModel.Y += distance.Y;
+                    System.Diagnostics.Debug.WriteLine($"◆◆◆ box area ViewModel {ViewModel.X}, {ViewModel.Y}");
                     UpdateLocation();
                 }
-                _prevPanX = args.X;
-                _prevPanY = args.Y;
+                _prevPanX = ViewModel.X;
+                _prevPanY = ViewModel.Y;
             }
         }
 

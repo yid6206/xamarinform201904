@@ -10,34 +10,33 @@ namespace App1.Views
         public TEffect() : base("Effects.TouchEffect")
         {
         }
-        public event TouchEventHundler OnTouch;
-        public void OnTouchEvent(object obj, TouchEventArgs args)
+        public bool Capture { set; get; }
+        public Action<Element, TouchActionEventArgs> OnTouchAction { get; set; }
+        public void OnTouchEvent(Element obj, TouchActionEventArgs args)
         {
-            OnTouch?.Invoke(obj, args);
+            OnTouchAction?.Invoke(obj, args);
         }
     }
-    public class TouchEventArgs : EventArgs
+    public enum TouchActionType
     {
-        public enum TouchEventType
-        {
-            Entered,
-            Pressed,
-            Moved,
-            Released,
-            Exited,
-            Cancelled
-        }
-        public TouchEventArgs(TouchEventType type, double x, double y)
+        Entered,
+        Pressed,
+        Moved,
+        Released,
+        Exited,
+        Cancelled
+    }
+    public class TouchActionEventArgs : EventArgs
+    {
+        public TouchActionEventArgs(int id, TouchActionType type, Point point, bool isInContact)
         {
             Type = type;
-            X = x;
-            Y = y;
+            Point = point;
+            IsInContact = isInContact;
         }
         public long Id { get; private set; }
-        public TouchEventType Type { get; private set; }
-        public double X { get; private set; }
-        public double Y { get; private set; }
+        public TouchActionType Type { get; private set; }
+        public Point Point { get; private set; }
+        public bool IsInContact { get; private set; }
     }
-
-    public delegate void TouchEventHundler(object obj, TouchEventArgs args);
 }

@@ -1,29 +1,30 @@
-﻿using Android.Views;
-using App1.Droid.Gestures;
-using App1.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ResolutionGroupName("Effects")]
-[assembly: ExportEffect(typeof(TouchEffect), "TouchEffect")]
-namespace App1.Droid.Gestures
+using Android.Views;
+
+[assembly: ResolutionGroupName("XamarinDocs")]
+[assembly: ExportEffect(typeof(TouchTracking.Droid.TouchEffect), "TouchEffect")]
+
+namespace TouchTracking.Droid
 {
     public class TouchEffect : PlatformEffect
     {
         Android.Views.View view;
         Element formsElement;
-        TEffect libTouchEffect;
+        TouchTracking.TouchEffect libTouchEffect;
         bool capture;
         Func<double, double> fromPixels;
         int[] twoIntArray = new int[2];
 
-        static Dictionary<Android.Views.View, TouchEffect> viewDictionary =
+        static Dictionary<Android.Views.View, TouchEffect> viewDictionary = 
             new Dictionary<Android.Views.View, TouchEffect>();
 
-        static Dictionary<int, TouchEffect> idToEffectDictionary =
+        static Dictionary<int, TouchEffect> idToEffectDictionary = 
             new Dictionary<int, TouchEffect>();
 
         protected override void OnAttached()
@@ -32,9 +33,9 @@ namespace App1.Droid.Gestures
             view = Control == null ? Container : Control;
 
             // Get access to the TouchEffect class in the .NET Standard library
-            TEffect touchEffect =
-                (TEffect)Element.Effects.
-                    FirstOrDefault(e => e is TEffect);
+            TouchTracking.TouchEffect touchEffect = 
+                (TouchTracking.TouchEffect)Element.Effects.
+                    FirstOrDefault(e => e is TouchTracking.TouchEffect);
 
             if (touchEffect != null && view != null)
             {
@@ -154,7 +155,7 @@ namespace App1.Droid.Gestures
         }
 
         void CheckForBoundaryHop(int id, Point pointerLocation)
-        {
+        { 
             TouchEffect touchEffectHit = null;
 
             foreach (Android.Views.View view in viewDictionary.Keys)
@@ -206,5 +207,4 @@ namespace App1.Droid.Gestures
                 new TouchActionEventArgs(id, actionType, point, isInContact));
         }
     }
-
 }
