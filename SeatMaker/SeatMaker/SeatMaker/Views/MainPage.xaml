@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:views="clr-namespace:SeatMaker.Views"
+            x:Class="SeatMaker.Views.MainPage">
+
+    <TabbedPage.Children>
+        <NavigationPage Title="全員">
+            <x:Arguments>
+                <views:MembersPage />
+            </x:Arguments>
+        </NavigationPage>
+        
+        <NavigationPage Title="参加者">
+            <x:Arguments>
+                <views:ParticipantsPage />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="席作成">
+            <x:Arguments>
+                <views:CreateSeatPage />
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+    
+</TabbedPage>

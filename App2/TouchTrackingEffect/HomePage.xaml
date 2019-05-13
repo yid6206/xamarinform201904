@@ -14,24 +14,8 @@
             </ResourceDictionary>
         </StackLayout.Resources>
 
-        <Button Text="BoxView Dragging"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Type local:BoxViewDraggingPage}" />
-
-        <Button Text="Draggable BoxView Dragging"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Type local:DraggableBoxViewDraggingPage}" />
-
         <Button Text="Ellipse Drawing"
                 Command="{Binding NavigateCommand}"
                 CommandParameter="{x:Type local:EllipseDrawingPage}" />
-
-        <Button Text="Finger Paint"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Type local:FingerPaintPage}" />
-        
-        <Button Text="Silent Keyboard"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Type local:SilentKeyboardPage}" />
     </StackLayout>
 </ContentPage>

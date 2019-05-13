@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:vt="clr-namespace:SeatMaker.Views.Touch"
+             x:Class="SeatMaker.Views.CreateSeatPage"
+             Title="席作成">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="更新" Clicked="UpdateSeat_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <skia:SKCanvasView x:Name="canvasView"
+                               PaintSurface="OnCanvasViewPaintSurface" />
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SeatMaker.Views.ParticipantsPage"
+             xmlns:vm="clr-namespace:SeatMaker.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:ParticipantsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="更新" Clicked="UpdateMembers_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+        <StackLayout Orientation="Horizontal" Padding="5" >
+            <Button Text="番号割り当て" TextColor="White" BackgroundColor="#49d849" HorizontalOptions="FillAndExpand"  VerticalOptions="Center" Clicked="AssignNumber_Clicked"/>
+            <Button Text="番号削除" TextColor="White" BackgroundColor="#49d849" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Clicked="DeleteNumber_Clicked"/>
+        </StackLayout>
+
+        <ListView x:Name="ParticipantsListView"
+                ItemsSource="{Binding Members}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadParticipantsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                CachingStrategy="RecycleElement"
+                ItemSelected="OnMemberSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="5" Orientation="Horizontal">
+                            <Label Text="{Binding Name}" HorizontalOptions="Start" VerticalOptions="Center"/>
+                            <StackLayout Padding="5" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                <Label Text="番号：" VerticalOptions="Center"/>
+                                <Label Text="{Binding Number}" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

@@ -10,10 +10,10 @@ namespace TouchTrackingEffectDemos
         {
             InitializeComponent();
 
-            NavigateCommand = new Command<Type>(async (Type pageType) =>
+            NavigateCommand = new Command<Type>((Type pageType) =>
             {
                 Page page = (Page)Activator.CreateInstance(pageType);
-                await Navigation.PushAsync(page);
+                Navigation.PushAsync(page).Wait();
             });
 
             BindingContext = this;

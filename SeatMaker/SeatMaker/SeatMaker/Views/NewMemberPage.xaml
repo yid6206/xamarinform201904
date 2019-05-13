@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SeatMaker.Views.NewMemberPage"
+             Title="追加">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="キャンセル" Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="決定" Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="所属" FontSize="Medium" />
+            <Entry Text="{Binding Member.Department}" FontSize="Small" />
+            <Label Text="名前" FontSize="Medium" />
+            <Entry Text="{Binding Member.Name}" FontSize="Small" />
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>

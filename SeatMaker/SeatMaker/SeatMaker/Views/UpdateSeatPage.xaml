@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:vt="clr-namespace:SeatMaker.Views.Touch"
+             x:Class="SeatMaker.Views.UpdateSeatPage"
+             Title="更新">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="キャンセル" Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="決定" Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+              BackgroundColor="White">
+
+                <skia:SKCanvasView x:Name="canvasView"
+                               PaintSurface="OnCanvasViewPaintSurface" />
+                <Grid.Effects>
+                    <vt:TouchEffect Capture="True"
+                                TouchAction="OnTouchEffectAction" />
+                </Grid.Effects>
+            </Grid>
+            <StackLayout Grid.Row="1" BackgroundColor="SkyBlue" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Margin="5">
+                    <Button x:Name="btnBack" Text="←" BackgroundColor="White" Clicked="BtnBack_Clicked"></Button>
+                    <Button x:Name="btnSquare" Text="□" BackgroundColor="White" Clicked="BtnSquare_Clicked"></Button>
+                    <Button x:Name="btnEllipse" Text="○" BackgroundColor="White" Clicked="BtnEllipse_Clicked"></Button>
+                </StackLayout>
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

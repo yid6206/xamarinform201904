@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeatMaker.Android", "SeatMaker\SeatMaker.Android\SeatMaker.Android.csproj", "{AB58662E-2A42-4CF3-9E25-833905B54830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeatMaker", "SeatMaker\SeatMaker\SeatMaker.csproj", "{39C17CE1-A656-4ED9-936D-6C0B08E61693}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB58662E-2A42-4CF3-9E25-833905B54830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB58662E-2A42-4CF3-9E25-833905B54830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB58662E-2A42-4CF3-9E25-833905B54830}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AB58662E-2A42-4CF3-9E25-833905B54830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB58662E-2A42-4CF3-9E25-833905B54830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB58662E-2A42-4CF3-9E25-833905B54830}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{39C17CE1-A656-4ED9-936D-6C0B08E61693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39C17CE1-A656-4ED9-936D-6C0B08E61693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39C17CE1-A656-4ED9-936D-6C0B08E61693}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{39C17CE1-A656-4ED9-936D-6C0B08E61693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39C17CE1-A656-4ED9-936D-6C0B08E61693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39C17CE1-A656-4ED9-936D-6C0B08E61693}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D3FD1F25-868F-4CA6-B36B-0B110FDB0353}
+	EndGlobalSection
+EndGlobal
