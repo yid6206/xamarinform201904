@@ -3,8 +3,10 @@ using SeatMaker.Models;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SeatMaker.Helper
 {
@@ -54,6 +56,28 @@ namespace SeatMaker.Helper
             if (!File.Exists(filePath))
                 return null;
             return SKBitmap.Decode(File.ReadAllBytes(filePath));
+        }
+
+        public static async Task SendImageToTeamsAsync(string url)
+        {
+            var filePath = Path.Combine(MyDirectory, ImageName);
+            if (!File.Exists(filePath))
+                return;
+            Debug.WriteLine("end load image");
+
+            var imageUri = await AzureStorageHelper.UpdateFileAsync(filePath);
+            if (string.IsNullOrEmpty(imageUri))
+            {
+                Debug.WriteLine("faild upload to azure ");
+                return;
+            }
+            Debug.WriteLine("sucess upload to azure ");
+
+            var sender = new TeamsMessageSender(url);
+            if (await sender.SendImageAsync("テスト", imageUri))
+                Debug.WriteLine("sucess to teams");
+            else
+                Debug.WriteLine("faild to teams");
         }
 
         private static void Serialize<T>(string filePath, T entity)

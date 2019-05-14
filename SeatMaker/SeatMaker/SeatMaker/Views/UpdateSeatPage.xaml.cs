@@ -144,17 +144,11 @@ namespace SeatMaker.Views
             _paint.Color = new SKColor(255, 255, 255);
             canvas.DrawRect(inout.Rectangle, _paint);
             _paint.Color = new SKColor(0, 0, 0);
-            _paint.TextAlign = SKTextAlign.Center;
-            _paint.TextSize = GridWidth;
-            var lineHeight = _paint.TextSize;
             var center = inout.Rectangle.GetCenter();
             if (inout.Width >= inout.Height)
-                canvas.DrawText("in/out", center.X, center.Y + lineHeight / 2, _paint);
+                DrawText(canvas, center, "in/out");
             else
-            {
-                canvas.DrawText("in", center.X, center.Y - lineHeight / 2, _paint);
-                canvas.DrawText("out", center.X, center.Y + lineHeight / 2, _paint);
-            }
+                DrawText(canvas, center, "in", "out");
         }
 
         private void DrawSquare(SKCanvas canvas, SquareDrawingFigure square)
@@ -173,7 +167,25 @@ namespace SeatMaker.Views
             _paint.Color = new SKColor(0, 0, 0);
             _paint.TextAlign = SKTextAlign.Center;
             _paint.TextSize = GridWidth;
-            canvas.DrawText(ellipse.Text, ellipse.Center, _paint);
+            DrawText(canvas, ellipse.Center, ellipse.Text);
+        }
+
+        private void DrawText(SKCanvas canvas, SKPoint textCenter, params string[] texts)
+        {
+            var offsetY = _paint.TextSize / 10f;
+            _paint.TextAlign = SKTextAlign.Center;
+            _paint.TextSize = GridWidth;
+            if (texts.Length == 1)
+            {
+                canvas.DrawText(texts[0], textCenter.X, textCenter.Y + _paint.TextSize / 2 - offsetY, _paint);
+            }
+            else if (texts.Length == 2)
+            {
+                canvas.DrawText(texts[0], textCenter.X, textCenter.Y - _paint.TextSize / 2 - offsetY, _paint);
+                canvas.DrawText(texts[1], textCenter.X, textCenter.Y + _paint.TextSize / 2 - offsetY, _paint);
+            }
+            else
+                throw new NotImplementedException();
         }
 
         private InOutDrawingFigure CreateInOut(SKPoint pt1, SKPoint pt2)

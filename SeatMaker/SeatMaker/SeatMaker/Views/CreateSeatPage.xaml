@@ -7,7 +7,8 @@
              Title="席作成">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="更新" Clicked="UpdateSeat_Clicked" />
+        <ToolbarItem Text="作成" Clicked="UpdateSeat_Clicked" />
+        <ToolbarItem Text="転送" Clicked="SendToTeams_Clicked" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

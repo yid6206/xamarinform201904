@@ -14,6 +14,28 @@ namespace SeatMaker.Models
 
         public TeamsMessageSender(string url) => _url = url;
 
+        public async Task<bool> SendImageAsync(string message, string imageUrl)
+        {
+            var model = new
+            {
+                username = "プロコン2019",
+                text = "image as of " + DateTime.Now,
+                //icon_emoji = icon,
+                channel = "向田メモ等",
+                attachments = new[] { new { image_url = imageUrl, title = "image as of " + DateTime.Now } }
+            };
+            using (var httpClient = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(model);
+                var content = new StringContent(json);
+
+                var response = await httpClient.PostAsync(_url, content);
+                return response.StatusCode == HttpStatusCode.OK;
+            }
+        }
+
+
+
         public async Task<bool> SendAsync(string body) => await SendAsync(body, null, null);
         public async Task<bool> SendAsync(string body, string title) => await SendAsync(body, title, null);
         public async Task<bool> SendAsync(string body, string title, string colorCode)

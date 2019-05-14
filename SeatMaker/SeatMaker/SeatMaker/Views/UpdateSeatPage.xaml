@@ -8,7 +8,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="キャンセル" Clicked="Cancel_Clicked" />
-        <ToolbarItem Text="決定" Clicked="Save_Clicked" />
+        <ToolbarItem x:Name="headerOk" Text="決定" Clicked="Save_Clicked" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -27,7 +27,7 @@
                                 TouchAction="OnTouchEffectAction" />
                 </Grid.Effects>
             </Grid>
-            <StackLayout Grid.Row="1" BackgroundColor="SkyBlue" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Grid.Row="1" BackgroundColor="{StaticResource Key=NavigationPrimary}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Margin="5">
                     <Button x:Name="btnBack" Text="←" BackgroundColor="White" WidthRequest="80" Clicked="BtnBack_Clicked"></Button>
                     <Button x:Name="btnInOut" Text="出入口" BackgroundColor="White" WidthRequest="80" Clicked="BtnInOut_Clicked"></Button>
