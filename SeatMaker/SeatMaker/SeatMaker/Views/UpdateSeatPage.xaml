@@ -29,9 +29,10 @@
             </Grid>
             <StackLayout Grid.Row="1" BackgroundColor="SkyBlue" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Margin="5">
-                    <Button x:Name="btnBack" Text="←" BackgroundColor="White" Clicked="BtnBack_Clicked"></Button>
-                    <Button x:Name="btnSquare" Text="□" BackgroundColor="White" Clicked="BtnSquare_Clicked"></Button>
-                    <Button x:Name="btnEllipse" Text="○" BackgroundColor="White" Clicked="BtnEllipse_Clicked"></Button>
+                    <Button x:Name="btnBack" Text="←" BackgroundColor="White" WidthRequest="80" Clicked="BtnBack_Clicked"></Button>
+                    <Button x:Name="btnInOut" Text="出入口" BackgroundColor="White" WidthRequest="80" Clicked="BtnInOut_Clicked"></Button>
+                    <Button x:Name="btnSquare" Text="机" BackgroundColor="White" WidthRequest="80" Clicked="BtnSquare_Clicked"></Button>
+                    <Button x:Name="btnEllipse" Text="席" BackgroundColor="White" WidthRequest="80" Clicked="BtnEllipse_Clicked"></Button>
                 </StackLayout>
             </StackLayout>
 
