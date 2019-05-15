@@ -23,9 +23,17 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <RelativeLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <v:BoxAreaLayout BindingContext="{Binding BoxAreaVM}" x:Name="DrawArea" BackgroundColor="white" Scale="{Binding BoxAreaVM.Scale}" Margin="0" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="1000" HeightRequest="1000">
-            </v:BoxAreaLayout>
+        <RelativeLayout HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+            <Frame WidthRequest="360" 
+                   HeightRequest="120"><!--四角形-->
+                <BoxView />
+            </Frame>
+            <Frame WidthRequest="60" 
+                   HeightRequest="60" 
+                   CornerRadius="30"><!--円形-->
+                <BoxView />
+            </Frame>
         </RelativeLayout>
         <StackLayout Grid.Row="1" BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Margin="5">

@@ -5,19 +5,19 @@
             x:Class="SeatMaker.Views.MainPage">
 
     <TabbedPage.Children>
-        <NavigationPage Title="全員">
+        <NavigationPage Title="全員" Icon="people.png">
             <x:Arguments>
                 <views:MembersPage />
             </x:Arguments>
         </NavigationPage>
-        
-        <NavigationPage Title="参加者">
+
+        <NavigationPage Title="参加者" Icon="list.png">
             <x:Arguments>
                 <views:ParticipantsPage />
             </x:Arguments>
         </NavigationPage>
 
-        <NavigationPage Title="席作成">
+        <NavigationPage Title="席作成" Icon="table.png">
             <x:Arguments>
                 <views:CreateSeatPage />
             </x:Arguments>

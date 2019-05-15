@@ -14,6 +14,8 @@ namespace SeatMaker.ViewModels
         {
             Title = "編集";
             Member = member;
+            if (Member.Number == "未設定")
+                Member.Number = "";
             UpdateMembersCommand = new Command(() => UpdateMembers());
         }
 

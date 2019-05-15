@@ -129,6 +129,7 @@ namespace SeatMaker.Views
 
         private void Draw(SKCanvas canvas)
         {
+            canvas.DrawColor(new SKColor(255, 255, 255));
             foreach (var figure in _completedInOuts.Concat(_editingInOuts))
                 DrawInOut(canvas, figure);
             foreach (var figure in _completedSquares.Concat(_editingSquares))

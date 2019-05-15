@@ -72,9 +72,9 @@ namespace SeatMaker.Helper
                 return;
             }
             Debug.WriteLine("sucess upload to azure ");
-
+            
             var sender = new TeamsMessageSender(url);
-            if (await sender.SendImageAsync("テスト", imageUri))
+            if (await sender.SendImageAsync("新人歓迎会2019 ", imageUri))
                 Debug.WriteLine("sucess to teams");
             else
                 Debug.WriteLine("faild to teams");

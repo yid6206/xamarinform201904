@@ -67,10 +67,6 @@ namespace App1.Views
 
         private void Tap_Tapped(object sender, EventArgs e)
         {
-            if (!BoxMode)
-                return;
-
-            var items = ViewModel.Items.ToList();
         }
 
         private void Pan_PanUpdated(object sender, PanUpdatedEventArgs e)

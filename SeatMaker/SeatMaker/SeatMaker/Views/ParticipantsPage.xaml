@@ -19,6 +19,8 @@
             <Button Text="番号削除" TextColor="White" BackgroundColor="#49d849" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Clicked="DeleteNumber_Clicked"/>
         </StackLayout>
 
+        <Label Text="{Binding CountText}" />
+
         <ListView x:Name="ParticipantsListView"
                 ItemsSource="{Binding Members}"
                 VerticalOptions="FillAndExpand"

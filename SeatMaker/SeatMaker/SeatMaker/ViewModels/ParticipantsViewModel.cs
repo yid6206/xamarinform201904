@@ -26,6 +26,20 @@ namespace SeatMaker.ViewModels
             DeleteNumberCommand = new Command(() => DeleteNumber());
         }
 
+        private string _countText = "";
+        public string CountText
+        {
+            get => _countText;
+            set
+            {
+                if (_countText != value)
+                {
+                    _countText = value;
+                    OnPropertyChanged(nameof(CountText));
+                }
+            }
+        }
+
         private void LoadParticipants()
         {
             if (IsBusy)
@@ -97,6 +111,8 @@ namespace SeatMaker.ViewModels
             Member[] members = SerializationHelper.LoadMembers().Where(q => q.IsParticipation).OrderBy(q => q.Department).ThenBy(q => q.Name).ToArray();
             foreach (var member in members)
                 Members.Add(member);
+
+            CountText = $"参加人数：{members.Count()}人";
         }
     }
 }

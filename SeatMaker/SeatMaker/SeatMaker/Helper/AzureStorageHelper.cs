@@ -3,6 +3,7 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace SeatMaker.Helper
             var container = blobClient.GetContainerReference("procon2019-mukaida");
             if (!(await container.ExistsAsync()))
                 return null;
-            var blob = container.GetBlockBlobReference(DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png");
+            var blob = container.GetBlockBlobReference(DateTime.Now.ToString("yyyyMMdd_HHmmss") + Path.GetExtension(file));
             await blob.UploadFromFileAsync(file);
             return blob.Uri.AbsoluteUri;
         }

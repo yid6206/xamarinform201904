@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -16,53 +17,14 @@ namespace SeatMaker.Models
 
         public async Task<bool> SendImageAsync(string message, string imageUrl)
         {
-            var model = new
-            {
-                username = "プロコン2019",
-                text = "image as of " + DateTime.Now,
-                //icon_emoji = icon,
-                channel = "向田メモ等",
-                attachments = new[] { new { image_url = imageUrl, title = "image as of " + DateTime.Now } }
-            };
+            var model = new Hashtable();
+            model["Text"] = $"{message}\n[{imageUrl}]({imageUrl})";
             using (var httpClient = new HttpClient())
             {
                 var json = JsonConvert.SerializeObject(model);
                 var content = new StringContent(json);
 
                 var response = await httpClient.PostAsync(_url, content);
-                return response.StatusCode == HttpStatusCode.OK;
-            }
-        }
-
-
-
-        public async Task<bool> SendAsync(string body) => await SendAsync(body, null, null);
-        public async Task<bool> SendAsync(string body, string title) => await SendAsync(body, title, null);
-        public async Task<bool> SendAsync(string body, string title, string colorCode)
-        {
-            return await PostAsync(_url, CreateModel(body, title, colorCode));
-        }
-
-        private TeamsWebhookModel CreateModel(string body, string title, string colorCode)
-        {
-            return new TeamsWebhookModel
-            {
-                ThemeColor = colorCode,
-                Summary = "C# .Net Standard",
-                Title = title,
-                Text = body,
-                Sections = new List<Section>()
-            };
-        }
-
-        private async Task<bool> PostAsync(string url, TeamsWebhookModel model)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var json = JsonConvert.SerializeObject(model);
-                var content = new StringContent(json);
-
-                var response = await httpClient.PostAsync(url, content);
                 return response.StatusCode == HttpStatusCode.OK;
             }
         }
