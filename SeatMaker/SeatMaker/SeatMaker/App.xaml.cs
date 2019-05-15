@@ -1,4 +1,5 @@
-﻿using SeatMaker.Views;
+﻿using SeatMaker.Interface;
+using SeatMaker.Views;
 using Xamarin.Forms;
 
 namespace SeatMaker
@@ -6,10 +7,10 @@ namespace SeatMaker
     public partial class App : Application
     {
 
-        public App()
+        public App(INativeService nativeService)
         {
             InitializeComponent();
-            MainPage = new MainPage();
+            MainPage = new MainPage(nativeService);
         }
 
         protected override void OnStart()
