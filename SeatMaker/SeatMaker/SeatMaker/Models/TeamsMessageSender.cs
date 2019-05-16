@@ -15,10 +15,11 @@ namespace SeatMaker.Models
 
         public TeamsMessageSender(string url) => _url = url;
 
-        public async Task<bool> SendImageAsync(string message, string imageUrl)
+        public async Task<bool> SendImageAsync(string tiitle, string message, string imageTitle, string imageUrl)
         {
             var model = new Hashtable();
-            model["Text"] = $"{message}\n[{imageUrl}]({imageUrl})";
+            model["Title"] = $"{tiitle}";
+            model["Text"] = $"[{imageTitle}]({imageUrl})<br>{message}";
             using (var httpClient = new HttpClient())
             {
                 var json = JsonConvert.SerializeObject(model);

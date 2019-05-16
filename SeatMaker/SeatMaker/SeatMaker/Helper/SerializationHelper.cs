@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace SeatMaker.Helper
 {
@@ -72,9 +73,12 @@ namespace SeatMaker.Helper
                 return;
             }
             Debug.WriteLine("sucess upload to azure ");
-            
+
+            var membars = LoadMembers();
+            var message = string.Join("<br>", membars.Where(q => q.IsParticipation).OrderBy(q => q.Number).Select(q => $"{q.Number} {q.Name}"));
+
             var sender = new TeamsMessageSender(url);
-            if (await sender.SendImageAsync("新人歓迎会2019 ", imageUri))
+            if (await sender.SendImageAsync("新人歓迎会2019 ", message, "座席表", imageUri))
                 Debug.WriteLine("sucess to teams");
             else
                 Debug.WriteLine("faild to teams");
